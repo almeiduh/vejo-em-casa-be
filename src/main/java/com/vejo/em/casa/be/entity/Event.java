@@ -20,12 +20,12 @@ public class Event {
 
     @OneToOne
     @Fetch(FetchMode.SELECT)
-    @JoinColumn(unique = true)
+    @JoinColumn
     private Category category;
 
     @OneToOne
     @Fetch(FetchMode.SELECT)
-    @JoinColumn(unique = true)
+    @JoinColumn
     private Creator creator;
 
     @Column(name = "stream_url")

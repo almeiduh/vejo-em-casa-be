@@ -1,11 +1,11 @@
 package com.vejo.em.casa.be.rest;
 
 
-import com.vejo.em.casa.be.entity.Creator;
 import com.vejo.em.casa.be.entity.Event;
 import com.vejo.em.casa.be.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,5 +25,8 @@ public class EventController {
 
     @GetMapping(value = "getSingleEvent")
     public Event getSingleEvent(Long id) { return repository.findById(id).orElse(null); }
+
+    @PostMapping
+    public void saveEvent(Event event) { repository.save(event); }
 
 }
