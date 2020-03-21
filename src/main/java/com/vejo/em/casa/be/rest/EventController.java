@@ -1,6 +1,7 @@
 package com.vejo.em.casa.be.rest;
 
 
+import com.vejo.em.casa.be.entity.Creator;
 import com.vejo.em.casa.be.entity.Event;
 import com.vejo.em.casa.be.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,14 @@ import java.util.List;
 public class EventController {
 
     @Autowired
-    EventRepository eventRepository;
+    EventRepository repository;
 
-    @GetMapping
+    @GetMapping(value="getAllEvents")
     public List<Event> getAllEvents() {
-        return eventRepository.findAll();
+        return repository.findAll();
     }
+
+    @GetMapping(value = "getSingleEvent")
+    public Event getSingleEvent(Long id) { return repository.findById(id).orElse(null); }
 
 }

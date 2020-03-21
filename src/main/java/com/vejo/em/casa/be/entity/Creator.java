@@ -18,7 +18,7 @@ public class Creator {
     @Column(name = "photo")
     private String photo;
 
-    @Column(name = "deonation_url")
+    @Column(name = "donation_url")
     private String donationUrl;
 
     public Long getId() {
