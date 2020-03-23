@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -16,17 +18,60 @@ public class EventService {
     @Autowired
     private EventRepository repository;
 
+    /**
+     * Get all the events in the database paginated
+     *
+     * @param page
+     * @param size
+     * @return List of events paginated and ordered by time to always showns in order
+     */
     public List<Event> getAllEventsPaginated(int page, int size) {
-        Pageable pageable = PageRequest.of(page,  size);
+        Pageable pageable = PageRequest.of(page,  size, Sort.by("time"));
         Page<Event> pageResult = repository.findAll(pageable);
         return pageResult.toList();
     }
 
+    /**
+     * Service responsible to find the event by id
+     * @param id
+     * @return Event by id
+     */
     public Event getSingleEvent(Long id) {
         return repository.findById(id).orElse(null);
     }
 
+    /**
+     * Save event
+     * @param event
+     */
     public void save(Event event) {
         repository.save(event);
+    }
+
+    /**
+     * Get all events by creator id
+     * @param creatorId
+     * @return List of events recording creator id
+     */
+    public List<Event> getAllEventsByCreator(Long creatorId){
+
+        // return empty list if the creatorId is null
+        if(creatorId == null)
+            return null;
+
+        return repository.findAllByCreator_Id(creatorId);
+    }
+
+    /**
+     * Get all events by category id
+     * @param categoryId
+     * @return List of events recording category id
+     */
+    public List<Event> getAllEventsByCategory(Long categoryId){
+
+        // return empty list if the creatorId is null
+//        if(categoryId == null) return null;
+
+        return repository.findAllByCategory_Id(categoryId);
     }
 }

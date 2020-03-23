@@ -20,17 +20,25 @@ public class EventController {
         return eventService.getAllEventsPaginated(page, size);
     }
 
-    @GetMapping(value = "/getSingleEvent/{id}")
-    public Event getSigleEvent(@PathVariable Optional<Integer> id) {
-        if(id.isPresent()) {
-            return eventService.getSingleEvent(id.get().longValue());
-        } else {
-            return null;
-        }
+    @GetMapping(value = "/getSingleEvent")
+    public Event getSigleEvent(@RequestParam("eventId") Long id) {
+        return eventService.getSingleEvent(id);
     }
 
     @PostMapping(value = "save")
     public void saveEvent(Event event) {
         eventService.save(event);
+    }
+
+    @GetMapping(value = "/getAllEventsByCreator")
+    @ResponseBody
+    public List<Event> getAllEventsByCreator(@RequestParam("creatorId") Long creatorId) {
+        return eventService.getAllEventsByCreator(creatorId);
+    }
+
+    @GetMapping(value = "/getAllEventsByCategory")
+    @ResponseBody
+    public List<Event> getAllEventsByCategory(@RequestParam("categoryId") Long categoryId) {
+        return eventService.getAllEventsByCategory(categoryId);
     }
 }
