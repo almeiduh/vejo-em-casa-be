@@ -1,25 +1,32 @@
 package com.vejo.em.casa.be.rest;
 
 import com.vejo.em.casa.be.entity.Category;
-import com.vejo.em.casa.be.repository.CategoryRepository;
+import com.vejo.em.casa.be.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
 
     @Autowired
-    CategoryRepository repository;
+    CategoryService service;
 
     @GetMapping(value="getAllCategories")
-    public List<Category> getAllCategories(){  return repository.findAll(); }
+    public List<Category> getAllCategories(){  return service.findAll(); }
 
-    @GetMapping(value = "getSingleCategory")
-    public Category getSingleCategory(Long id) { return repository.findById(id).orElse(null); }
+    @GetMapping(value = "getSingleCategory/{id}")
+    public Category getSingleCategory(@PathVariable Optional<Integer> id) {
+        if (id.isPresent()) {
+            return service.findById(id.get().longValue());
+        } else {
+            return null;
+        }
+    }
 
+    @PostMapping
+    public void save(Category category) { this.service.save(category); }
 }

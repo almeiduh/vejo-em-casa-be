@@ -5,7 +5,6 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Locale;
 
 @Entity
 @Table(name = "events")
@@ -13,7 +12,7 @@ public class Event {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
 
     @Column(name = "approved")
     private Boolean approved;
@@ -28,18 +27,23 @@ public class Event {
     @JoinColumn
     private Creator creator;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "stream_url")
     private String streamUrl;
+
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "event_time")
     private LocalDateTime time;
 
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -67,12 +71,28 @@ public class Event {
         this.creator = creator;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getStreamUrl() {
         return streamUrl;
     }
 
     public void setStreamUrl(String streamUrl) {
         this.streamUrl = streamUrl;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public LocalDateTime getTime() {

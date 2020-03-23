@@ -15,11 +15,14 @@ public class Creator {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "photo")
-    private String photo;
-
     @Column(name = "donation_url")
     private String donationUrl;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "photo")
+    private String photo;
 
     public Long getId() {
         return id;
@@ -37,19 +40,27 @@ public class Creator {
         this.name = name;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
     public String getDonationUrl() {
         return donationUrl;
     }
 
     public void setDonationUrl(String donationUrl) {
         this.donationUrl = donationUrl;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }
