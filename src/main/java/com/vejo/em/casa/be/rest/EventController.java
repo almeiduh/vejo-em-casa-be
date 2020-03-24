@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/events")
@@ -16,8 +15,8 @@ public class EventController {
     EventService eventService;
 
     @GetMapping(value="/getAllEvents/{page}/{size}")
-    public List<Event> getAllEvents(@PathVariable int page,@PathVariable int size) {
-        return eventService.getAllEventsPaginated(page, size);
+    public List<Event> getAllEvents(@PathVariable int page,@PathVariable int size, @RequestParam("creatorId") Long creatorId, @RequestParam("categoryId") Long categoryId) {
+        return eventService.getAllEventsPaginated(page, size, creatorId, categoryId);
     }
 
     @GetMapping(value = "/getSingleEvent")
@@ -28,17 +27,5 @@ public class EventController {
     @PostMapping(value = "save")
     public void saveEvent(Event event) {
         eventService.save(event);
-    }
-
-    @GetMapping(value = "/getAllEventsByCreator")
-    @ResponseBody
-    public List<Event> getAllEventsByCreator(@RequestParam("creatorId") Long creatorId) {
-        return eventService.getAllEventsByCreator(creatorId);
-    }
-
-    @GetMapping(value = "/getAllEventsByCategory")
-    @ResponseBody
-    public List<Event> getAllEventsByCategory(@RequestParam("categoryId") Long categoryId) {
-        return eventService.getAllEventsByCategory(categoryId);
     }
 }

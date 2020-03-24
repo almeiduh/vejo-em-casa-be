@@ -18,6 +18,7 @@ public class EventService {
     @Autowired
     private EventRepository repository;
 
+
     /**
      * Get all the events in the database paginated
      *
@@ -25,9 +26,16 @@ public class EventService {
      * @param size
      * @return List of events paginated and ordered by time to always showns in order
      */
-    public List<Event> getAllEventsPaginated(int page, int size) {
+    public List<Event> getAllEventsPaginated(int page, int size, Long creatorId, Long categoryId) {
         Pageable pageable = PageRequest.of(page,  size, Sort.by("time"));
         Page<Event> pageResult = repository.findAll(pageable);
+
+        if(creatorId != null) {
+            return this.getAllEventsByCreator(creatorId, pageable);
+        } else if (categoryId != null) {
+            return this.getAllEventsByCategory(categoryId, pageable);
+        }
+
         return pageResult.toList();
     }
 
@@ -53,13 +61,12 @@ public class EventService {
      * @param creatorId
      * @return List of events recording creator id
      */
-    public List<Event> getAllEventsByCreator(Long creatorId){
+    public List<Event> getAllEventsByCreator(Long creatorId, Pageable pageable){
 
         // return empty list if the creatorId is null
-        if(creatorId == null)
-            return null;
+        if(creatorId == null) return null;
 
-        return repository.findAllByCreator_Id(creatorId);
+        return repository.findAllByCreator_Id(creatorId, pageable);
     }
 
     /**
@@ -67,11 +74,11 @@ public class EventService {
      * @param categoryId
      * @return List of events recording category id
      */
-    public List<Event> getAllEventsByCategory(Long categoryId){
+    public List<Event> getAllEventsByCategory(Long categoryId, Pageable pageable){
 
         // return empty list if the creatorId is null
-//        if(categoryId == null) return null;
+        if(categoryId == null) return null;
 
-        return repository.findAllByCategory_Id(categoryId);
+        return repository.findAllByCategory_Id(categoryId, pageable);
     }
 }
