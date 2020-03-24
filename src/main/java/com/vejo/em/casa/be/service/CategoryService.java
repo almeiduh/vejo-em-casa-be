@@ -17,12 +17,7 @@ public class CategoryService {
         return repository.findAll();
     }
 
-    public Category findById(Long id) {
+    public Category getSingleCategory(Long id) {
         return repository.findById(id).orElse(null);
     }
-
-    public void save(Category category) {
-        repository.save(category);
-    }
-
 }

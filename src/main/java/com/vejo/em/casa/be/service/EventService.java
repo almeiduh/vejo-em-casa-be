@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -30,10 +29,8 @@ public class EventService {
         Pageable pageable = PageRequest.of(page,  size, Sort.by("time"));
         Page<Event> pageResult = repository.findAll(pageable);
 
-        if(creatorId != null) {
-            return this.getAllEventsByCreator(creatorId, pageable);
-        } else if (categoryId != null) {
-            return this.getAllEventsByCategory(categoryId, pageable);
+        if (creatorId != null && categoryId != null) {
+            return this.getAllEventsByCreatorAndCategory(creatorId, categoryId, pageable);
         }
 
         return pageResult.toList();
@@ -49,36 +46,19 @@ public class EventService {
     }
 
     /**
-     * Save event
-     * @param event
-     */
-    public void save(Event event) {
-        repository.save(event);
-    }
-
-    /**
-     * Get all events by creator id
+     * Get all events by creator AND/OR category id
      * @param creatorId
-     * @return List of events recording creator id
-     */
-    public List<Event> getAllEventsByCreator(Long creatorId, Pageable pageable){
-
-        // return empty list if the creatorId is null
-        if(creatorId == null) return null;
-
-        return repository.findAllByCreator_Id(creatorId, pageable);
-    }
-
-    /**
-     * Get all events by category id
      * @param categoryId
-     * @return List of events recording category id
+     * @param pageable
+     * @return List of events
      */
-    public List<Event> getAllEventsByCategory(Long categoryId, Pageable pageable){
+    public List<Event> getAllEventsByCreatorAndCategory(Long creatorId, Long categoryId, Pageable pageable){
 
-        // return empty list if the creatorId is null
-        if(categoryId == null) return null;
+        if(categoryId == null)
+            return repository.findAllByCreator_Id(creatorId, pageable);
+        else if (creatorId == null)
+            return repository.findAllByCategory_Id(categoryId, pageable);
 
-        return repository.findAllByCategory_Id(categoryId, pageable);
+        return repository.findAllByCreator_idAndCategory_Id(creatorId, categoryId, pageable);
     }
 }

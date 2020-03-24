@@ -14,18 +14,13 @@ public class EventController {
     @Autowired
     EventService eventService;
 
-    @GetMapping(value="/getAllEvents/{page}/{size}")
-    public List<Event> getAllEvents(@PathVariable int page,@PathVariable int size, @RequestParam("creatorId") Long creatorId, @RequestParam("categoryId") Long categoryId) {
+    @GetMapping(value="/getAllEvents")
+    public List<Event> getAllEvents(@RequestParam int page,@RequestParam int size, @RequestParam("creatorId") Long creatorId, @RequestParam("categoryId") Long categoryId) {
         return eventService.getAllEventsPaginated(page, size, creatorId, categoryId);
     }
 
     @GetMapping(value = "/getSingleEvent")
     public Event getSigleEvent(@RequestParam("eventId") Long id) {
         return eventService.getSingleEvent(id);
-    }
-
-    @PostMapping(value = "save")
-    public void saveEvent(Event event) {
-        eventService.save(event);
     }
 }

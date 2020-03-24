@@ -24,4 +24,11 @@ public interface EventRepository extends PagingAndSortingRepository<Event, Long>
      * @return
      */
     List<Event> findAllByCategory_Id(Long categoryId, Pageable pageable);
+
+    /**
+     * Find All the events by category
+     * @param categoryId
+     * @return
+     */
+    List<Event> findAllByCreator_idAndCategory_Id(Long creatorId, Long categoryId, Pageable pageable);
 }
