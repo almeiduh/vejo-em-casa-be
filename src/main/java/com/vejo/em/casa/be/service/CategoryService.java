@@ -20,4 +20,10 @@ public class CategoryService {
     public Category getSingleCategory(Long id) {
         return repository.findById(id).orElse(null);
     }
+
+
+    public Category save(Category category) {
+        return repository.save(category);
+    }
+
 }

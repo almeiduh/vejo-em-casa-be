@@ -1,14 +1,16 @@
 package com.vejo.em.casa.be.rest;
 
-import com.vejo.em.casa.be.entity.Creator;
-import com.vejo.em.casa.be.service.CreatorService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.vejo.em.casa.be.entity.Creator;
+import com.vejo.em.casa.be.service.CreatorService;
 
 @RestController
 @RequestMapping("/creator")
@@ -17,11 +19,20 @@ public class CreatorController {
     @Autowired
     CreatorService service;
 
-    @GetMapping(value="getAllCreators")
+    @GetMapping()
     public List<Creator> getAllCreators() { return service.findAll(); }
 
-    @GetMapping(value = "getSingleCreator/{id}")
-    public Creator getSingleCreator(@RequestParam(value = "creatorId") Long creatorId) {
-        return service.getSingleEvent(creatorId);
+
+    @GetMapping(value = "/{id}")
+    public Creator getSingleCreator(@PathVariable Long id) { 
+       return service.getSingleEvent(id);
+
     }
+
+
+    @PostMapping()
+    public Creator saveCreator(Creator creator) { 
+    	return service.save(creator); 
+    }
+
 }

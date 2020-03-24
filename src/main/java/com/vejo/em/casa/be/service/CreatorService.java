@@ -20,4 +20,8 @@ public class CreatorService {
     public Creator getSingleEvent(Long id) {
         return repository.findById(id).orElse(null);
     }
+
+    public Creator save(Creator creator) {
+        return repository.save(creator);
+    }
 }
