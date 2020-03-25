@@ -17,11 +17,11 @@ public class CreatorService {
         return repository.findAll();
     }
 
-    public Creator findById(Long id) {
+    public Creator getSingleEvent(Long id) {
         return repository.findById(id).orElse(null);
     }
 
-    public void save(Creator creator) {
-        repository.save(creator);
+    public Creator save(Creator creator) {
+        return repository.save(creator);
     }
 }
