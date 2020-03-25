@@ -25,26 +25,26 @@ public class EventService {
      * Get all the events in the database paginated
      * @param categoryId
      * @param creatorId
-     * @param maxDate 
-     * @param minDate 
+     * @param after
+     * @param before
      * @param page
      * @param size
      * @return List of events paginated and ordered by time to always showns in order
      */
     public Page<Event> getAllEvents(Long categoryId,
     		                        Long creatorId,
-    		                        LocalDateTime after, 
-    		                        LocalDateTime before, 
-    		                        int page, 
+    		                        LocalDateTime after,
+    		                        LocalDateTime before,
+    		                        int page,
     		                        int size) {
-       
+
     	Pageable pageable = PageRequest.of(page,  size, Sort.by("time"));
         return repository.findAll(
         		Specification.where(hasCategoryId(categoryId))
         		             .and(hasCreatorId(creatorId))
         		             .and(afterDate(after))
-        		             .and(beforeDate(before))        		            		 
-        		          , 
+        		             .and(beforeDate(before))
+        		          ,
         		pageable);
     }
 
@@ -66,35 +66,35 @@ public class EventService {
     }
 
 
-    
+
     ////////////////////////////////////////////////
     /// Specifications for Events                //
     ///////////////////////////////////////////////
-    
-    
+
+
     /**
-     * 
+     *
      * @param before
      * @return
      */
     static Specification<Event> beforeDate(LocalDateTime before) {
     	if(before == null) return (event, cq, cb) -> null;
-    	
+
         return (event, cq, cb) -> cb.lessThanOrEqualTo(event.get(Event_.time), before);
     }
-    
+
     /**
-     * 
+     *
      * @param after
      * @return
      */
     static Specification<Event> afterDate(LocalDateTime after) {
     	if(after == null) return (event, cq, cb) -> null;
-    	
+
         return (event, cq, cb) -> cb.greaterThanOrEqualTo(event.get(Event_.time), after);
     }
-    
-    
+
+
     /**
      * 
      * @param categoryId can be {@literal null}.
@@ -116,6 +116,6 @@ public class EventService {
     	if(creatorId == null) return (event, cq, cb) -> null;
     	return (event, cq, cb) -> cb.equal(event.get(Event_.creator), creatorId);
     }
-    
-    
+
+
 }
