@@ -3,7 +3,15 @@ package com.vejo.em.casa.be.entity;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -38,6 +46,14 @@ public class Event {
 
     @Column(name = "event_time")
     private LocalDateTime time;
+
+    @Lob
+    @Column(name = "thumbnail", columnDefinition="BLOB")
+    private byte[] thumbnail;
+
+    @Lob
+    @Column(name = "highlightImg", columnDefinition="BLOB")
+    private byte[] highlightImg;
 
     public Long getId() {
         return id;
@@ -101,5 +117,17 @@ public class Event {
 
     public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+
+    public void setThumbnail(byte[] thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public byte[] getHighlightImg() {
+        return highlightImg;
+    }
+
+    public void setHighlightImg(byte[] highlightImg) {
+        this.highlightImg = highlightImg;
     }
 }

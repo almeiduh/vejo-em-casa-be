@@ -86,7 +86,7 @@ public class EventServiceTest {
 		Event event2 = new Event();
 		event2.setTitle("Very Good event");
 		event2.setApproved(false);
-		event2.setTime(LocalDateTime.of(2020, 3, 3, 3, 3));
+		event2.setTime(LocalDateTime.of(2020, 2, 2, 2, 2));
 		event2.setCategory(c2);
 		event2.setCreator(creator1);
 		eventService.save(event2);
@@ -114,7 +114,7 @@ public class EventServiceTest {
 	@Test
 	@Transactional
 	public void getByCategory() {
-		Page<Event> res = eventService.getAllEvents(c1.getId(), null, 0, 50);
+		Page<Event> res = eventService.getAllEvents(c1.getId(), null,null,null, 0, 50);
 		
 		log.info("Result: {}", res.getContent());
 		assertEquals(1, res.getContent().size());
@@ -124,9 +124,35 @@ public class EventServiceTest {
 	@Test
 	@Transactional
 	public void getByCategoryAndCreator() {
-		Page<Event> res = eventService.getAllEvents(c2.getId(), creator2.getId(), 0, 50);
+		Page<Event> res = eventService.getAllEvents(c2.getId(), creator2.getId(), null, null, 0, 50);
 		
 		log.info("Result: {}", res.getContent());
+		assertEquals(1, res.getContent().size());
+	}
+	
+	
+	@Test
+	@Transactional
+	public void getAfterDate() {
+		Page<Event> res = eventService.getAllEvents(null, null, LocalDateTime.of(2020, 2, 2, 2, 2), null, 0, 50);
+		
+		assertEquals(2, res.getContent().size());
+	}
+	
+	@Test
+	@Transactional
+	public void getBeforDate() {
+		Page<Event> res = eventService.getAllEvents(null, null, null, LocalDateTime.of(2020, 2, 2, 2, 2), 0, 50);
+		
+		assertEquals(2, res.getContent().size());
+	}
+	
+	
+	@Test
+	@Transactional
+	public void getbetweenDate() {
+		Page<Event> res = eventService.getAllEvents(null, null, LocalDateTime.of(2020, 2, 2, 2, 2), LocalDateTime.of(2020, 2, 2, 2, 2), 0, 50);
+		
 		assertEquals(1, res.getContent().size());
 	}
 }
