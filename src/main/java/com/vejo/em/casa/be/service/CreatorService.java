@@ -17,7 +17,7 @@ public class CreatorService {
         return repository.findAll();
     }
 
-    public Creator getSingleEvent(Long id) {
+    public Creator getSingleCreator(Long id) {
         return repository.findById(id).orElse(null);
     }
 

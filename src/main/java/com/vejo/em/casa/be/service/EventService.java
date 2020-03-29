@@ -1,8 +1,9 @@
 
 package com.vejo.em.casa.be.service;
 
-import java.time.LocalDateTime;
-
+import com.vejo.em.casa.be.entity.Event;
+import com.vejo.em.casa.be.entity.Event_;
+import com.vejo.em.casa.be.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,9 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.vejo.em.casa.be.entity.Event;
-import com.vejo.em.casa.be.entity.Event_;
-import com.vejo.em.casa.be.repository.EventRepository;
+import java.time.LocalDateTime;
 
 @Service
 public class EventService {
@@ -65,12 +64,9 @@ public class EventService {
         return repository.save(event);
     }
 
-
-
     ////////////////////////////////////////////////
     /// Specifications for Events                //
     ///////////////////////////////////////////////
-
 
     /**
      *
@@ -94,7 +90,6 @@ public class EventService {
         return (event, cq, cb) -> cb.greaterThanOrEqualTo(event.get(Event_.time), after);
     }
 
-
     /**
      * 
      * @param categoryId can be {@literal null}.
@@ -105,7 +100,6 @@ public class EventService {
     	
         return (event, cq, cb) -> cb.equal(event.get(Event_.category), categoryId);
     }
-     
     
     /**
      * 
@@ -116,6 +110,5 @@ public class EventService {
     	if(creatorId == null) return (event, cq, cb) -> null;
     	return (event, cq, cb) -> cb.equal(event.get(Event_.creator), creatorId);
     }
-
 
 }
