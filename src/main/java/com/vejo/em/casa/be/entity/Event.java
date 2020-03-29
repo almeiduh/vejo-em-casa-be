@@ -50,4 +50,6 @@ public class Event {
     @Column(name = "highlightImg", columnDefinition="BLOB")
     private byte[] highlightImg;
 
+    @Column(name = "isHighlight")
+    private boolean isHighlight = false;
 }

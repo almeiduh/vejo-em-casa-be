@@ -24,11 +24,12 @@ public class EventController {
             @RequestParam(required = false) Long creatorId,
             @RequestParam(required = false) LocalDateTime after,
             @RequestParam(required = false) LocalDateTime before,
+            @RequestParam(required = false) Boolean isHighlight,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
-        log.debug("Received request to get all events. categoryId: {}, creatorId: {}, after: {}, before: {}, page: {}, size: {}",
-                categoryId, creatorId, after, before, page, size);
-        return eventService.getAllEvents(categoryId, creatorId, after, before, page, size);
+        log.debug("Received request to get all events. categoryId: {}, creatorId: {}, after: {}, before: {}, isHighlight: {}, page: {}, size: {}",
+                categoryId, creatorId, after, before, isHighlight, page, size);
+        return eventService.getAllEvents(categoryId, creatorId, after, before, isHighlight, page, size);
     }
 
     @GetMapping(value = "/{id}")
