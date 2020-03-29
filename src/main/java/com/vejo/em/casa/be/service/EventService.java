@@ -26,6 +26,7 @@ public class EventService {
      * @param creatorId
      * @param after
      * @param before
+     * @param highlight
      * @param page
      * @param size
      * @return List of events paginated and ordered by time to always showns in order
@@ -34,6 +35,7 @@ public class EventService {
     		                        Long creatorId,
     		                        LocalDateTime after,
     		                        LocalDateTime before,
+    		                        Boolean highlight,
     		                        int page,
     		                        int size) {
 
@@ -43,8 +45,8 @@ public class EventService {
         		             .and(hasCreatorId(creatorId))
         		             .and(afterDate(after))
         		             .and(beforeDate(before))
-        		          ,
-        		pageable);
+        		             .and(isHighLight(highlight))
+        		, pageable);
     }
 
     /**
@@ -68,6 +70,9 @@ public class EventService {
     /// Specifications for Events                //
     ///////////////////////////////////////////////
 
+
+
+    
     /**
      *
      * @param before
@@ -111,4 +116,10 @@ public class EventService {
     	return (event, cq, cb) -> cb.equal(event.get(Event_.creator), creatorId);
     }
 
+    static Specification<Event> isHighLight(Boolean highlight) {
+    	if(highlight == null) return (event, cq, cb) -> null;
+
+        return (event, cq, cb) -> cb.equal(event.get(Event_.isHighlight), highlight);
+    }
+    
 }
