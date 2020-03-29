@@ -1,7 +1,10 @@
 package com.vejo.em.casa.be.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name = "subscribed_users")
 public class SubscribedUser {
@@ -20,19 +23,4 @@ public class SubscribedUser {
         this.email = email;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

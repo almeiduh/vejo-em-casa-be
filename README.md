@@ -1,7 +1,8 @@
 # vejo-em-casa-be
 Vejo Em Casa - Backend
 
-
+## Configure Lombok in IDEs to avoid compilation errors
+* [Configure Lombok](https://www.baeldung.com/lombok-ide) 
 
 ## DEV Profile
 
